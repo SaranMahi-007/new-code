@@ -91,7 +91,7 @@ exports.mailtrigeer = (req, res) => {
     var mailOptions = {
       from: process.env.emailid,
       to: email,
-      subject: "packet app",
+      subject: "pocket app",
       text: req.body.message,
     };
   

@@ -21,5 +21,7 @@ router.delete('/remove-customer-card', stripeController.deletecard)
 router.get('/get-customer', stripeController.getCustomerDetails)
 router.put('/update-customer-card', stripeController.updatecard)
 router.post('/payment_refund', stripeController.refundAmount)
+router.post('/create-individual-subscription', stripeController.createindividualsubscription)
+router.get('/product-details', stripeController.getproduct)
 
 module.exports = router

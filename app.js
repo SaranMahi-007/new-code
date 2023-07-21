@@ -89,6 +89,12 @@ app.use(function (req, res, next) {
   }
 });
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.post("/createfolder", (req, res) => {
   var foldername = req.body.foldername;
 

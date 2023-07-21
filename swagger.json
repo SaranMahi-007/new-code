@@ -1,0 +1,1197 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample pocket server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+        "version": "1.0.6",
+        "title": "Swagger Pocket",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:4000",
+   
+    "tags": [
+        {
+            "name": "pet",
+            "description": "Everything about your Pets",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "store",
+            "description": "Access to Petstore orders"
+        },
+        {
+            "name": "user",
+            "description": "Operations about user",
+            "externalDocs": {
+                "description": "Find out more about our store",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+              "tags": [
+                "ngo"
+              ],
+              "summary": "create ngo",
+              "description": "create ngo",
+              "operationId": "create",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/register"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/register"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+        "/auth/login": {
+            "post": {
+              "tags": [
+                "ngo"
+              ],
+              "summary": "send email",
+              "description": "send email by forgot password",
+              "operationId": "create",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/login"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/login"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+        "/forgot": {
+          "post": {
+            "tags": [
+              "ngo"
+            ],
+            "summary": "send email",
+            "description": "send email by forgot password",
+            "operationId": "create",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json",
+              "application/xml"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "body",
+                "description": "send email",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/forgot"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/forgot"
+                }
+              },
+              "400": {
+                "description": "Invalid email"
+              }
+            }
+          }
+        },
+        "/verifyotp":{
+            "post": {
+                "tags": [
+                  "ngo"
+                ],
+                "summary": "send email",
+                "description": "send email by forgot password",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/verifyotp"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/verifyotp"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/confirmpassword":{
+            "post": {
+                "tags": [
+                  "ngo"
+                ],
+                "summary": "confirm password",
+                "description": "Update password",
+                "operationId": "update",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/confirmpassword"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/confirmpassword"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/forgotuser": {
+            "post": {
+              "tags": [
+                "user"
+              ],
+              "summary": "send email",
+              "description": "send email by forgot password",
+              "operationId": "create",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/forgotuser"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/forgotuser"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+          "/verifyuserotp": {
+            "post": {
+              "tags": [
+                "user"
+              ],
+              "summary": "verify otp",
+              "description": "verify otp",
+              "operationId": "create",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/verifyuserotp"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/verifyuserotp"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+          "/updatepassword": {
+            "put": {
+              "tags": [
+                "user"
+              ],
+              "summary": "Update password",
+              "description": "Update password",
+              "operationId": "Update",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/updatepassword"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/updatepassword"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+          "/sendmail-otp":{
+            "post": {
+                "tags": [
+                  "user"
+                ],
+                "summary": "send otp by email",
+                "description": "send email by otp",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/sendmail-otp"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/sendmail-otp"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/phonenumber-otp":{
+            "post": {
+                "tags": [
+                  "user"
+                ],
+                "summary": "send otp by phonenumber",
+                "description": "send otp by phonenumber",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/phonenumber-otp"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/phonenumber-otp"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/forgotusermobile":{
+            "post": {
+                "tags": [
+                  "user"
+                ],
+                "summary": "send otp by phonenumber",
+                "description": "send otp by phonenumber",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/forgotusermobile"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/forgotusermobile"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/verifyuserupdatepassword":{
+            "post": {
+                "tags": [
+                  "user"
+                ],
+                "summary": "send otp by phonenumber",
+                "description": "send otp by phonenumber",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/verifyuserupdatepassword"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/verifyuserupdatepassword"
+                    }
+                  },
+                  "400": {
+                    "description": "Invalied otp or email"
+                  }
+                }
+              }
+        },
+        "/updatemobilepassword": {
+            "put": {
+              "tags": [
+                "user"
+              ],
+              "summary": "Update password",
+              "description": "Update password",
+              "operationId": "Update",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/updatemobilepassword"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/updatemobilepassword"
+                  }
+                },
+                "400": {
+                  "description": "Invalid email"
+                }
+              }
+            }
+          },
+          "/create-customer":{
+            "post": {
+                "tags": [
+                  "stripe"
+                ],
+                "summary": "create customer",
+                "description": "create customer by stripe",
+                "operationId": "create",
+                "consumes": [
+                  "application/json"
+                ],
+                "produces": [
+                  "application/json",
+                  "application/xml"
+                ],
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "body",
+                    "description": "send email",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/create-customer"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "successful operation",
+                    "schema": {
+                      "$ref": "#/definitions/create-customer"
+                    }
+                  },
+                  "400": {
+                    "description": "Some error"
+                  }
+                }
+              }
+        },
+        "/create-product":{
+          "post": {
+              "tags": [
+                "stripe"
+              ],
+              "summary": "create product",
+              "description": "create product by stripe",
+              "operationId": "create",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "send email",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/create-product"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/create-product"
+                  }
+                },
+                "400": {
+                  "description": "Some error"
+                }
+              }
+            }
+      },
+      "/create-subscription":{
+        "post": {
+            "tags": [
+              "stripe"
+            ],
+            "summary": "create subscription",
+            "description": "create subscription by stripe",
+            "operationId": "create",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json",
+              "application/xml"
+            ],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "body",
+                "description": "send email",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/create-subscription"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation",
+                "schema": {
+                  "$ref": "#/definitions/create-subscription"
+                }
+              },
+              "400": {
+                "description": "Some error"
+              }
+            }
+          }
+    },
+    "/create-account":{
+      "post": {
+          "tags": [
+            "stripe"
+          ],
+          "summary": "create account",
+          "description": "create account by stripe",
+          "operationId": "create",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json",
+            "application/xml"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "send email",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/create-account"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/create-account"
+              }
+            },
+            "400": {
+              "description": "Some error"
+            }
+          }
+        }
+  }
+
+      },
+      
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header"
+        },
+        "petstore_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+            "flow": "implicit",
+            "scopes": {
+                "read:pets": "read your pets",
+                "write:pets": "modify pets in your account"
+            }
+        }
+    },
+    "definitions": {
+        "register":{
+            "type": "object",
+            "properties": {
+              "authorised_official_forename": {
+                "type": "string"
+              },
+              "charity_id":{
+                "type":"string"
+              },
+              "charity_regulator":{
+                "type":"string"
+              },
+              "charity_regulator_reg_no":{
+                "type":"string"
+              },
+              "charity_type":{
+                "type":"string"
+              },
+              "country":{
+                "type":"string"
+              },
+              "email":{
+                "type":"string"
+              },
+              "email_id":{
+                "type":"string"
+              },
+              "hmrc_charities_ref":{
+                "type":"string"
+              },
+              "location":{
+                "type":"string"
+              },
+              "logo":{
+                "type":"string"
+              },
+              "name":{
+                "type":"string"
+              },
+              "password":{
+                "type":"string"
+              },
+              "phone_number":{
+                "type":"string"
+              },
+              "postcode":{
+                "type":"string"
+              },
+              "preferred_currency":{
+                "type":"string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+        },
+        "login":{
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password":{
+                "type":"string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+        },
+        "forgot": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            }
+          },
+          "xml": {
+            "name": "ngo"
+          }
+        },
+        "verifyotp": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "otp":{
+                "type":"integer"
+              },
+              "password":{
+                "type":"string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "confirmpassword": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "oldpassword":{
+                "type":"string"
+              },
+              "newpassword":{
+                "type":"string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "forgotuser": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "verifyuserotp": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "otp":{
+                "type":"integer"
+              }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "updatepassword": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password":{
+                "type":"string"
+              }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "sendmail-otp": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "otp":{
+                "type":"integer"
+              }
+             
+            },
+            "xml": {
+              "name": "user"
+            }
+          },
+          "phonenumber-otp": {
+            "type": "object",
+            "properties": {
+              "phonenumber": {
+                "type": "string"
+              },
+              "otp":{
+                "type":"integer"
+              }
+             
+            },
+            "xml": {
+              "name": "user"
+            }
+          },
+          "forgotusermobile": {
+            "type": "object",
+            "properties": {
+              "phonenumber": {
+                "type": "string"
+              }
+            },
+            "xml": {
+              "name": "user"
+            }
+          },
+          "verifyuserupdatepassword": {
+            "type": "object",
+            "properties": {
+              "phonenumber": {
+                "type": "string"
+              },
+              "otp":{
+                "type":"integer"
+              }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "updatemobilepassword": {
+            "type": "object",
+            "properties": {
+              "phonenumber": {
+                "type": "string"
+              },
+              "password":{
+                "type":"string"
+              }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "create-customer": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type":{
+                "type":"string"
+              },
+              "card[number]":{
+                "type":"number"
+              },
+              "card[exp_month]":{
+                "type":"number"
+              },
+              "card[exp_year]":{
+                "type":"number"
+              },
+              "card[cvc]":{
+                "type":"number"
+              },
+              "cardholder_name":{
+                "type":"string"
+              }
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "create-product": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "default_price[currency]":{
+                "type":"string"
+              },
+              "default_price[unit_amount_decimal]":{
+                "type":"number"
+              }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          },
+          "create-subscription": {
+            "type": "object",
+            "properties": {
+              "billing_cycle_anchor": {
+                "type": "date"
+              },
+              "cancel_at":{
+                "type":"date"
+              },
+              "customerId":{
+                "typ,e":"string"
+              },
+              "priceId":{
+                "type":"string"
+              },
+              "quantity":{
+                "type":"number"
+              },
+              "metadata": {
+                "type": "object",
+                "properties": {
+                  "gift_amount": {
+                    "type": "string"
+                  },
+                  "appfee": {
+                    "type": "string"
+                  },
+                  "ngo_id": {
+                    "type": "string"
+                  }
+                }
+             
+            },
+            "xml": {
+              "name": "ngo"
+            }
+          }
+      },
+      "create-account": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "country":{
+            "type":"string"
+          },
+          "email":{
+            "typ,e":"string"
+          },
+          "business_type":{
+            "type":"string"
+          },
+          "capabilities[card_payments][requested]":{
+            "type":"boolean"
+          },
+          "capabilities[transfers][requested]":{
+            "type":"boolean"
+          },
+          "company[phone]":{
+            "type":"number"
+          },
+          "company[name]":{
+            "type":"string"
+          },
+          "company[address][line1]":{
+            "type":"string"
+          },
+          "company[address][city]":{
+            "type":"string"
+          },
+          "company[address][state]":{
+            "type":"string"
+          },
+          "company[address][country]":{
+            "type":"string"
+          },
+          "company[address][postal_code]":{
+            "type":"string"
+          },
+          "business_profile[url]":{
+            "type":"string"
+          },
+          "tos_acceptance[date]":{
+            "type":"date"
+          },
+          "tos_acceptance[ip]":{
+            "type":"number"
+          },
+          "business_profile[product_description]":{
+            "type":"string"
+          },
+          "business_profile[mcc]":{
+            "type":"number"
+          },
+          "company[registration_number]":{
+            "type":"string"
+          },
+          "representative[first_name]":{
+            "type":"string"
+          },
+          "company[executives_provided]":{
+            "type":"boolean"
+          },
+          "company[directors_provided]":{
+            "type":"boolean"
+          },
+          "external_account[routing_number]":{
+            "type":"number"
+          },
+          "account":{
+            "type":"number"
+          },
+          "external_account[object]":{
+            "type":"string"
+          },
+          "external_account[account_number]":{
+            "type":"string"
+          },
+          "external_account[country]":{
+            "type":"string"
+          },
+          "external_account[currency]":{
+            "type":"string"
+          },
+          "first_name":{
+            "type":"string"
+          },
+          "last_name":{
+            "type":"string"
+          },
+          "relationship[representative]":{
+            "type":"boolean"
+          },
+          "relationship[director]":{
+            "type":"boolean"
+          },
+          "relationship[executive]":{
+            "type":"boolean"
+          },
+          "relationship[owner]":{
+            "type":"boolean"
+          },
+          "relationship[percent_ownership]":{
+            "type":"number"
+          },
+          "relationship[title]":{
+            "type":"string"
+          },
+          "person'semail":{
+            "type":"string"
+          },
+          "dob[day]":{
+            "type":"number"
+          },
+          "dob[month]":{
+            "type":"number"
+          },
+          "dob[year]":{
+            "type":"number"
+          },
+          "address[city]":{
+            "type":"string"
+          },
+          "address[country]":{
+            "type":"string"
+          },
+          "address[line1]":{
+            "type":"string"
+          },
+          "address[line2]":{
+            "type":"string"
+          },
+          "address[postal_code]":{
+            "type":"number"
+          },
+          "address[state]":{
+            "type":"string"
+          },
+          "phone":{
+            "type":"number"
+          },
+          
+        "xml": {
+          "name": "ngo"
+        }
+      }
+  },
+      
+        "externalDocs": {
+            "description": "Find out more about Swagger",
+            "url": "http://swagger.io"
+        }
+    }
+  }
+   

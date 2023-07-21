@@ -583,6 +583,162 @@ exports.createindividualproduct = async (req, res) => {
   }
 }
 
+
+exports.createindividualsubscription = async (req, res) => {
+  try {
+    console.log("start");
+    var request = req.body
+    // Retrieve all products from Stripe
+    const products = await stripe.products.list();
+
+    // Find the product that matches the given name
+    const product = products.data.find((p) => p.name === req.body.ngo_id);
+
+    if (!product) {
+      // throw new Error(`Product "${req.body.ngo_id}" not found.`);
+      return res.status(400).json({
+        message: `Product ${req.body.ngo_id} not found.`,
+
+      })
+    }
+    // Assuming 1 GBP = 100 units
+    const exchangeRate = 100;
+
+    // Convert the UK amount to "unite" amount
+    const uniteAmount = req.body.amount * exchangeRate;
+    console.log("uniteAmount", uniteAmount);
+    if (req.body.subscription_type === "daily") {
+      const dailyPrice = await stripe.prices.create({
+        unit_amount: uniteAmount,
+        currency: "gbp",
+        product: product.id,
+        recurring: {
+          interval: 'day',
+        },
+      });
+      var priceId = dailyPrice.id
+
+
+
+      var subscription = await subscriptionCreation(request, priceId)
+      console.log("subscription", subscription);
+      res.json({
+        message: "subscription creates successfull",
+        subscription
+
+      })
+    }
+    else if (req.body.subscription_type === "weekly") {
+      const weeklyPrice = await stripe.prices.create({
+        unit_amount: uniteAmount,
+        currency: "gbp",
+        product: product.id,
+        recurring: {
+          interval: 'week',
+        },
+      });
+
+      console.log("eeee", weeklyPrice);
+      var priceId = weeklyPrice.id
+      var subscription = await subscriptionCreation(request, priceId)
+      console.log("subscription", subscription);
+      res.json({
+        message: "subscription creates successfull",
+        subscription
+
+      })
+    } else if (req.body.subscription_type === "monthly") {
+      const monthlyPrice = await stripe.prices.create({
+        unit_amount: uniteAmount,
+        currency: "gbp",
+        product: product.id,
+        recurring: {
+          interval: 'month',
+        },
+      });
+      var priceId = monthlyPrice.id
+
+      const paymentLink = await stripe.paymentLinks.create({
+        // amount: 10, // Amount in the smallest currency unit (e.g., cents for USD)
+        currency: 'gbp',
+        line_items: [{ price: priceId, quantity: 1 }],
+        // Optional: You can set metadata for the payment link if needed
+        metadata: {
+          order_id: '12345',
+        },
+      });
+      console.log("paymentLink", paymentLink);
+
+      var subscription = await subscriptionCreation(request, priceId)
+      console.log("subscription", subscription);
+      res.json({
+        message: "subscription creates successfull",
+        subscription
+
+      })
+    } else if (req.body.subscription_type === "yearly") {
+      const yearlyPrice = await stripe.prices.create({
+        unit_amount: uniteAmount,
+        currency: "gbp",
+        product: product.id,
+        recurring: {
+          interval: 'year',
+        },
+      });
+      var priceId = yearlyPrice.id
+      var subscription = await subscriptionCreation(request, priceId)
+      console.log("subscription", subscription);
+      res.json({
+        message: "subscription creates successfull",
+        subscription
+
+      })
+    }
+  }
+  catch (error) {
+    console.error('Error creating product and price:', error);
+    res.json({
+      message: "Some Error",
+      error
+
+    })
+  }
+}
+
+async function subscriptionCreation(req, priceId) {
+  console.log("req", req);
+
+  const currentDate = new Date();
+  const startDate = Math.floor(Date.now() / 1000); // Replace with the desired start date   
+  const endDate = Math.floor(new Date(req.cancel_at).getTime() / 1000);
+  const cycle_Date = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000); // Add 24 hours (1 day)
+  const metadata = JSON.parse(req.metadata);
+  const giftAmount = metadata.gift_amount;
+  const appfee = metadata.appfee;
+  const ngoId = metadata.ngo_id;
+  const metauserId = metadata.user_id
+  const newdata = {
+    giftAmount: giftAmount,
+    appfee: appfee,
+    ngoId: ngoId,
+    userId: metauserId
+  }
+
+  console.log(metadata);
+  console.log("newdata", newdata)
+  const subscription = await stripe.subscriptions.create({
+    customer: req.customerId,
+    items: [
+      { price: priceId, quantity: req.quantity }, // Replace with the actual price ID of the recurring price
+    ],
+    billing_cycle_anchor: cycle_Date,
+    cancel_at: endDate,
+    metadata: newdata
+
+  });
+  return subscription
+}
+
 // exports.addCardToCustomer = async (req, res) => {
 //   try {
 //     console.log("geting,addCardToCustomer");
@@ -885,3 +1041,32 @@ exports.refundAmount = async (req, res) => {
   }
 }
 
+exports.getproduct = async (req, res) => {
+  try {
+    // Retrieve all products from Stripe
+    const products = await stripe.products.list();
+
+    // Find the product that matches the given name
+    const product = products.data.find((p) => p.name === req.body.ngo_id);
+
+    if (!product) {
+      throw new Error(`Product "${productName}" not found.`);
+    }
+
+    // Retrieve the prices associated with the product
+    const prices = await stripe.prices.list({
+      product: product.id,
+    });
+
+    // Return the product and prices
+    res.json({
+      message: `product details fetch successfully`,
+      // paymentMethods.data
+      product,
+      prices: prices.data,
+    })
+
+  } catch (error) {
+    throw new Error(`Error retrieving product details: ${error.message}`);
+  }
+}
