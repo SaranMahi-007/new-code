@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <style>
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .Para {
+            color: rgb(0, 0, 0);
+        }
+
+        .Para {
+            color: hsl(0, 0%, 0%);
+            font-size: 14px;
+            padding-right: 5%;
+            font-family: 'Calibri';
+        }
+        .ParaHead{
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            padding-right: 5%;
+            font-family: 'Calibri';
+        }
+    </style>
+    {{!-- <script>
+      //var Student = localStorage.getItem('nameofstudent')
+    </script> --}}
+
+</head>
+
+<body>
+   <p class="ParaHead">Dear {{user}}!</p>
+
+    <p class="Para">Congratulations! Your account has been successfully created on our platform. We are thrilled to have you join our community. This email contains important information about your account, so please save it for future reference. </p>
+    <p class="Para">Here are your account details:</p>
+    <p class="Para">Username: {{ Username}}</p>
+    <p class="Para">Email:{{Email}}</p>
+    <p class="Para">Password: {{Password}}</p>
+    <p class="Para">Please note that the password provided above is auto-generated for security purposes. We highly recommend changing your password after logging in for the first time. To ensure the security of your account, please follow these guidelines when creating a new password:</p>
+    <p class="Para">Use a combination of uppercase and lowercase letters, numbers, and special characters.
+Make sure your password is unique and not easily guessable.
+Avoid using personal information, such as your name, birthdate, or address.
+To access your account, please visit our platform at [platform URL] and use the following credentials:</p>
+
+    <p class="Para">Username: {{ Username}}</p>
+    <p class="Para">Password: {{Password}}</p>
+</body>
+
+</html>
+   
