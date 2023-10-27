@@ -19,7 +19,7 @@ exports.sendBrevoReportEmail = async (req, res) => {
     const emailHtml = emailTemplate();
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -53,6 +53,10 @@ exports.sendBrevoReportEmail = async (req, res) => {
             })
         }, function (error) {
             console.error(error);
+            res.json({
+                message: "Report submit failed",
+                error
+            })
         });
     }
     catch (err) {
@@ -73,7 +77,7 @@ exports.sendBrevoPaymentEmail = async (req, res) => {
     const emailHtml = emailTemplate();
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -109,6 +113,10 @@ exports.sendBrevoPaymentEmail = async (req, res) => {
             })
         }, function (error) {
             console.error(error);
+            res.json({
+                message: "Payment Success",
+                error
+            })
         });
     }
     catch (err) {
@@ -134,7 +142,7 @@ exports.emailtrigger = (bodyPassword, bodyEmail, bodyName) => {
     const emailHtml = emailTemplate(emaildata);
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -195,7 +203,7 @@ exports.emailtrigger = (bodyPassword, bodyEmail, bodyName) => {
 //     const emailHtml = emailTemplate(emaildata);
 //     try {
 //         var SibApiV3Sdk = require('sib-api-v3-sdk');
-//         SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+//         SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
 
 //         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -249,7 +257,7 @@ exports.sendBrevoRefund = async (req, res) => {
     const emailHtml = emailTemplate();
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -305,7 +313,7 @@ exports.sendBrevoExport = async (req, res) => {
     const emailHtml = emailTemplate();
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -362,7 +370,7 @@ const user ={
     const emailHtml = emailTemplate(user);
     try {
         var SibApiV3Sdk = require('sib-api-v3-sdk');
-        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
 
         new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
 
@@ -452,7 +460,7 @@ exports.sendSmsFunc = async (recipient, content) => {
         const defaultClient = SibApiV3Sdk.ApiClient.instance;
 
         let apiKey = defaultClient.authentications['api-key'];
-        apiKey.apiKey = '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';
+        apiKey.apiKey = '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';
 
         let apiInstance = new SibApiV3Sdk.TransactionalSMSApi();
 
@@ -474,7 +482,7 @@ exports.sendSmsFunc = async (recipient, content) => {
         })
     }
     catch (err) {
-        console.log('10393898848448484844848488', err)
+        //console.log('10393898848448484844848488', err)
         return res.json({ success: false, message: err.message })
     }
 }
@@ -486,7 +494,7 @@ exports.sendEmailbrevo = async (emailId, text, subject) => {
         port: 587,
         auth: {
             user: "Hello@pocketgiving.co.uk",
-            pass: "xsmtpsib-bc8582713523a3216c4e00961ef6fb9c353aeb2fe95c6bef3838d7765631a34b-KpO3xGRgc2CQdWjw",
+            pass: "xsmtpsib-bc8582713523a3216c4e00961ef6fb9c353aeb2fe95c6bef3838d7765631a34b-yBhKHzbvrXSkL0RI",
         },
     });
 
@@ -514,7 +522,7 @@ exports.sendEmail = async (emailId,subject,text) => {
         port: 587,
         auth: {
             user: "Hello@pocketgiving.co.uk",
-            pass: "xsmtpsib-bc8582713523a3216c4e00961ef6fb9c353aeb2fe95c6bef3838d7765631a34b-KpO3xGRgc2CQdWjw",
+            pass: "xsmtpsib-bc8582713523a3216c4e00961ef6fb9c353aeb2fe95c6bef3838d7765631a34b-yBhKHzbvrXSkL0RI",
         },
     });
 
@@ -536,3 +544,127 @@ exports.sendEmail = async (emailId,subject,text) => {
     });
 }
 
+
+exports.useremail = (userid,email,name,reason) => {
+    // console.log(req.body, "reqstatug")
+  
+    // const { name, email } = req.body;
+
+    const emailTemplateSource = fs.readFileSync('./views/userstatus.handlebars', "utf8");
+    const emailTemplate = handlebars.compile(emailTemplateSource)
+    const emaildata ={
+        Username:name,
+        Email:email,
+        userId:userid,
+        userReason:reason
+       }
+    const emailHtml = emailTemplate(emaildata);
+    try {
+        var SibApiV3Sdk = require('sib-api-v3-sdk');
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '  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';
+
+        new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
+
+            "sender": { "email": "Hello@pocketgiving.co.uk", "name": "Pocket" },
+            "subject": "This is my default subject line",
+            // "templateId": 2,
+            "htmlContent": emailHtml,
+            
+            "messageVersions": [
+                //Definition for Message Version 1 
+                {
+                    "to": [
+                        {
+                            "email": email,
+                            "name": name
+                        }
+
+                    ],
+
+                    "subject": "Your Account has been deactivated!"
+                },
+
+            ]
+
+        }).then(function (data) {
+            console.log(data);
+          
+            // res.json({
+            //     message: "Register Success",
+            //     data
+            // })
+
+        }, function (error) {
+            console.error(error);
+        });
+        return data
+    }
+    catch (err) {
+        // res.json({
+        //     message: "Error",
+        //     err
+        // })
+    }
+}
+
+exports.userActiveEmail = (userid,email,name,reason) => {
+    // console.log(req.body, "reqstatug")
+  
+    // const { name, email } = req.body;
+
+    const emailTemplateSource = fs.readFileSync('./views/useractiveemail.handlebars', "utf8");
+    const emailTemplate = handlebars.compile(emailTemplateSource)
+    const emaildata ={
+        Username:name,
+        Email:email,
+        userId:userid,
+        userReason:reason
+       }
+    const emailHtml = emailTemplate(emaildata);
+    try {
+        var SibApiV3Sdk = require('sib-api-v3-sdk');
+        SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey = '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';
+
+        new SibApiV3Sdk.TransactionalEmailsApi().sendTransacEmail({
+
+            "sender": { "email": "Hello@pocketgiving.co.uk", "name": "Pocket" },
+            "subject": "This is my default subject line",
+            // "templateId": 2,
+            "htmlContent": emailHtml,
+            
+            "messageVersions": [
+                //Definition for Message Version 1 
+                {
+                    "to": [
+                        {
+                            "email": email,
+                            "name": name
+                        }
+
+                    ],
+
+                    "subject": "Your Account has been activated!"
+                },
+
+            ]
+
+        }).then(function (data) {
+            console.log(data);
+          
+            // res.json({
+            //     message: "Register Success",
+            //     data
+            // })
+
+        }, function (error) {
+            console.error(error);
+        });
+        return data
+    }
+    catch (err) {
+        // res.json({
+        //     message: "Error",
+        //     err
+        // })
+    }
+}

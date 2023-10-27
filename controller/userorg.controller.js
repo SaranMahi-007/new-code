@@ -129,7 +129,7 @@ res.status(200).send({
     })
   }
   catch (error) {
-    console.log(error)
+    //console.log(error)
     res.status(401).send({
       'Success': false, 'message': 'Please enter valid phonenumber'
     })
@@ -709,5 +709,50 @@ exports.announcement = async (req, res) => {
     res.status(400).json({ message: error })
   }
 
+}
+
+exports.userDeactivatedStatus = async (req, res) => {
+  console.log("coming")
+  try{
+    var userid =  req.body.userid;
+    var email = req.body.email;
+    var name = req.body.name;
+    var reason = req.body.reason;
+    console.log("Id",userid);
+    console.log("Email", email)
+console.log("Name",name);
+console.log("Reason",reason)
+
+var userData = `query MyQuery {
+  users(where: {id: {_eq: "${userid}"}}) {
+    disabled
+  }
+}`
+
+var userStatus = await request(endpoint, userData, null, {
+  "x-hasura-admin-secret": adminSecret,
+})
+//console.log("status",userStatus.users[0].disabled)
+var newStatus = userStatus.users[0].disabled
+console.log(newStatus)
+if(newStatus === true){
+  console.log("coming in if condition")
+  brevoController.useremail(userid,email,name,reason)
+  return res.status(200).send({
+    'Success': true, 'message': 'Email Send Successfully'
+  })
+}
+else if(newStatus === false){
+  console.log("coming if elseif")
+  brevoController.userActiveEmail(userid,email,name,reason)
+  return res.status(200).send({
+    'Success': true, 'message': 'Email Send Successfully'
+  })
+}
+
+  }catch(error){
+    console.log(error)
+    res.status(400).json({ message: error })
+  }
 }
 

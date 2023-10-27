@@ -14,13 +14,28 @@ const emailValidator = require('email-validator');
 const fs = require("fs");
 const handlebars = require("handlebars");
 const firebase = require('firebase-admin');
+var FCM = require('fcm-node');
 const brevoController = require('./brevo.controller');
+
+// const accDetails = {
+//   "type": "service_account",
+//   "project_id": "pocketsf-a05c9",
+//   "private_key_id": "e8fd1b6eff5fe1ce013f6bf6a6e8e80c4cd074cd",
+//   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCfs6iD2Uov2WTC\nFFCMuNNvS6O1S6NG9SKVdG/vFqQ6JyFkpxvn8IBsCBRQebScmnImgoVsvxA7Q6yb\n+WcrmhY21GesWLThI8gxMUeFZn0/8aeB2T1njbHQmaegp3jMfh4xQI2Gg6QP1tTZ\nRa1vhSYfaQKTh2qjr7/MoebH0BoJmYWMtW4wJYxUilxWByRdYMk6/Z3wSWdG3HqV\nFy+VVU1VGfI0VoY0nQ42yfxlA214A3sKMmg3Ifml3/ufTOFv7b+as+ro3mgwyl1b\nS7FStp15FR7zWvt+059ZhLl7rzSa19mihi5Y3iwfifPKuk35awAaOY7lkonGjjZr\nBllK9pmtAgMBAAECggEAHIOKDrJ877KnrgxM/ncgjyJI8j11Q13QxTEDLEPVYimq\n6Wr5zU1wTHmb0OuN/xkHUQ9kTbCGcCJq3vVmgY8zMKp3cTrsXrdSDtBu5edQ7RoT\nL5ivQT44FZfdqU5Ff/NzphURv8bgw9A2dC2f5AW4swp/goI+3MdsHhf5Gcty3qwh\nfKSIQrGrG60EULHJ67W3RiQRp1YR8k8XPwelye6UZ9OADgpz3ewlNDgdzmpfheP1\nRynAkDjX8QQbR9KJXZa9Vi7TSESrXsAmJ3CGR+HZ2h9JXUcpxV+Ws7YIG9MIyKU7\ngi/91gvQr3S6lFiVqW7BHbkiLvMnjSLBa0r6FB5Q0QKBgQDSbWOLXjdP6VWY5PCv\nQElpIuQeDo0XjgQ2QSuSzIbFXEIHeDf09FtlVRmhGIcUcI+Q7rn3wqYiG3ruVSCB\najPgiE6WZlHCSPFhCGyksBYWiRUUh5aZODIig/d/wQv2yRoVkT+TiWj4W3f1Cy7h\nGpxkF57rDnpO2TUsPpdQB5hWcQKBgQDCSevgYC1vWUTVQbsCp0Z31yLlKaCV9sqi\nvV0dMKzrTNzMX2wRF6aQUi8eAyb2+Lqz2kjHT654NG318SZ4KXjwaAoIsfXJBu4r\nzXHCKLsaj1cQ9KKkNyTt1T7n/CuLZ9zAsc4/cm9I3H5Vjvoy66xUu2yKJIZClsqt\nqU9oq8ns/QKBgGMa5fEztHVMfeX+nWTMsEZ2Cl4lmEnptw4eb3k6HpdBNk/yTNhv\nZcQ56lI3DReRU+x8otWPtVMHAkTRjveknz42tFydYBBS7mw23YRK8nw2n9kFauZK\n00HySVTABPR8Dm7t87V22BtwaPTeCXw3XkS94zjtnqkYH7Tw3a7xhMvhAoGAf8yq\nKKR7HoRk37Zl8h/gHZJZNM6GAD8fGZ9gMYREKl8b2h9mcXPSL5qvvZkrN0dzYDzU\npK5IQG+UaTPgLyhwkgqNlxygZUR2xD9WdfXe5WCmT9PrbAON+hfMUkKwzfla3zHW\nTivTAeVwAI2VDIuzhuTmR5Qw8HpKBaOaRWrC320CgYBRtvgOt2gdgqxdfARHWxXR\nmQs84FpBJ0HgZtqV7wbokmw17Y2R9Cp43ABQRj6WNQBJzZXfDlsEk8LB7GT5SRxe\nd/ymQOTL5pPvk5kxSjo8qw6Ls58n5+qyTrj1EFGZ0frAQeVrjtAhFU+a6fJHt0cy\nXHPUSbv0pb3kPX0sdG5/kw==\n-----END PRIVATE KEY-----\n",
+//   "client_email": "firebase-adminsdk-a10cq@pocketsf-a05c9.iam.gserviceaccount.com",
+//   "client_id": "106350607719247940120",
+//   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+//   "token_uri": "https://oauth2.googleapis.com/token",
+//   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+//   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-a10cq%40pocketsf-a05c9.iam.gserviceaccount.com",
+//   "universe_domain": "googleapis.com"
+// }
 
 const accDetails = {
   "type": "service_account",
   "project_id": "pockets-b5ac9",
-  "private_key_id": "cb75a2f0fc6256ca1598a2ade1334b2d80c7b12c",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCuXtKiTDI0m80V\n7/qJ0usj+zpcGSNHXHbc05aYD0qBCkmWAvJhipNE7GxROr5qeVnE7dKyJviVISCd\nUk5w0rSds/uJt8nskfXpjvtcYQZw1Qy/QFaqTgRoh7oDWqyJ5ECA8BNg4GOTkRW+\nFpd1X3t86Ug6AgHphuipHesfHQV/jTJFii71FG+LukZ8CKDWPVhJ9Z7dlyOCA+TB\nXeDTGRqZdrF/2HCo/W/p6nhogU/X5wc6YT109E6+8SG6clezY9PGUsfRUcwhCuBK\n09Wfa+qqLILTJYMVXyXJB0saQRyam+Wld6hpc90vVbku0uOxrJP2+a+Nqoc8H5Q9\nuUparu6nAgMBAAECggEACQe8HM+ZYgQXkOVGslCMAOcH1LEwlIeDWFhU2jcggqJH\nwU8Rwl9s1QrxaRuDtPvn3Dz8xmEiSobWq48RpOIknG4vvqgX+vpsI9ZVyij0Lm+6\nI0Vvt44myEsPJRFTEikR9ht4xXGZdpDy8U82NMvnF0b1iJuGAdQMxIVaIdhc6ogN\nZ0sEsUycpW64mZDBu01GKFvtOrMfP1o4ETnWfxkSVQuJd8j+29YVrtV6WyfK2b1+\nSj2UeHN9sFEq3i3/TOPlZ7ItuRp5UO6z+qauGQBhcmB8HHDhfqztprAEoJQw4ORL\ndMLvO2OFFn4ZrO5nffvF5nT2mgW516iPCt/DX6XiUQKBgQDsPBBigq3F8z1x8b+F\nVMcuCSHjAoOe+5x46bbX5OxkwH2o9DhbhrfPN1viZSKXQgdSKtgy5DEB1n4sJ5pf\nGySZMW2sCuzm/8A80soK8Wop4jVhqjHF+VEKrj8TRU/z9Bwq1F1H7IBEZWdGY3sx\nZMolsjSDHffh/ab0wdC7Bu6NGwKBgQC89a6ZSIQVTWjqPdnUcudYvnuD123iK3qf\noJkGv3E9wjQhL5Gz674LvB/E4ZFBv1U4eZiGkMQLTQEgKe8967roPvB3ZdUZXta2\nrRbcDU+PZQKOwuZRSDk5wc2Mt8PxgcC4xqokRdU9OB3N1SRfwPJuGbYovdDTmk+w\nRYpB1Rb5ZQKBgGqvcYLbm1jjUeOMlr7DG7S5oRkhQIni/bZJbi6wDuYtXFKaAH2t\nKIOnb5Kds/J1elLsUHkjPtKiqJaOSBQdcPjSLsJcqMJly85sL5yjjBtgMlVqBFJx\nFt1o9clhKwt0OehJwdrCfubkmLBcKv2SlAxUH4z7UsA3yleM1BQyvDbzAoGACmZf\nOLKECoQbLSFAVvAICZtaQvRdaOBJvHVjVrq8qdCBe/4ZP9TOveiZuwVLMFouf5A5\ns9ZN4+1WDYYhU8Agpl2ocHnbU60jliRKqMvWwCaoEGFrubeG5sXi4UbP8v/YMpNE\nlAB/7wGiqkx71wVQkny5yN5BmxPYJPR+2oa23/0CgYAxzr5KrBAuq5LIlqBZeLXl\nMtuQwTyMX0x4QpdWgKwYQmh7Sgw/RPc4kUip7PFZaCqe8mgfjqFqhQ2LxQgdbnEV\n4nAADRce9Q5/jpKInj9x+EjjduwuViBvPfTCkrffr/O6iP08dG9MyZRxxC/Kergq\nHxRUaj4J9NcdYx3HzeAoDA==\n-----END PRIVATE KEY-----\n",
+  "private_key_id": "984a7df88ef4ad9889bd84e0df588d56eecc99b6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDVaXEgfezY1U9l\nq/1MBF4tMDh9y7s5GhEdSroj6PrBNlokXK86GeW6zPVhk7Pj/noopCeDcHj3ECLN\n+QBVtaWuWKrFVpqcOPsxxlH9HUouErvh0UZjgj/Q7yrZ2SKqvq9FVnrIk58zUDBJ\n8dSD6P9Xy/qN+JsbAjZJ/PYcVrRsePNhFTdffSDyTEPy/hbp276/U6/vz2ZS22D5\nLuoYPHOrHEMFU6TnCbRtloC5t1Yc8qd4aTwinXDKTZ+p/hBBqYBUHTPIKjf3jS9F\n3TwoIQS+/dTDcB28mbPNpPRhUFhCcCthzE1uCvEsnMDyS2xGfucgPtKbAjaWigoe\nOrTF/oZPAgMBAAECggEAAPnPc5zqdVSxspRRFITnQquixn3PqFjZ1S7J9RoT83Li\ngfdj3GR77BkTJ367vCzQtYOH+WONRLaagiNDq3X+K52U16bSuX4lNTq5QJVes8vl\nd13emtvgm32hzjHeT7Y5f5v/9GTVvdqoWIjg4OLdhV2VvV/H+HKlJDzM30pM3uYY\ni1jtmqnWjuxo2xrwOnBC6saqFtMlpZY0c2KLuvaIzB3IRTHiXJs8tBWt1Fm44zKz\ntPRo3n6E2PpmYdhZXwO+9t8vE8WJ3NEh6yH7GNaL9Kt/dKDTX+KXtjVa5gra6mOs\nUBteKHEdI/R1Z1r21+gjindblvdYUNYX690Ymf+HEQKBgQDwsS5eH7Vs2nUOLR66\nmJ9SALejZbXqT81DsBD6BaOkObUu6W8UaOOW9/kJKcIgrTniT/TM20k/8jWsQ9Lk\nJevn8M/GJzG4hjkkdZyLbk1g4J5wvpLQ9TagW981haSJkqp58hu8OLrdXGUbGVPW\nYi/tEPudhp56s2VPHPR8vz8G5wKBgQDi/BlK7tCgXRCirmnBFd9J+MYGJDz2HfMH\ntZ0gnedTBCD7WrFmyIeF+fymhc3+QsulRfht79xMnF36l/JR9KDaNZ00bgrAEIOJ\n4AAjWrx3Qspag6Cku3SBiDYieDcXYGP9XuB3LEDFuusGilfzHmo3VfhEdvj+FOls\nKbIH0j3gWQKBgCEPlVjkbh03nKCH3hKvaCLxakgNboFy2LUVeB9/qsyiCJsbAWEC\nT1CrWw/BJqMqaCsH5I5HCLa55Fl3L36bHt5LG58SPygjd7HkXc5hJkvKTrkZ1DzT\nkd9Q/0Xwx3sGJFh/wwOFn1VMna6tOfDWp9KeZJFsrlQYVDAbwBFqi5O9AoGAR1Dr\n5XY5SFlVM7fW9FqZ6FToat+R48YvKJnwP2I9XwDqF+87085nfjm4Ht3lheCYuVnN\nn0UAk3WBtY1uDj/tFgJIXUPBzuyhV31wrasBkfsDNwMqQve+uEACujvJG2gmomHf\n5rGZvEZpN4nZ7kH9H1u8gE5dFv+dA2XqULjGxikCgYBVT3yl/5/eghM5EQ0X3Z/N\nXf00/lCU81CVTm73T+rtup8CQpH8qElHxg0MyB3Sdwkjterwbos4ZHYA5vhwBSqF\nm4+pLtfCuTCxMio6qGd3fQIytz7rc5bEE08OcCNTLbgRd734BZf7Sn6aQlOuXhTF\nbqivjoO5ngWLM/tASinudg==\n-----END PRIVATE KEY-----\n",
   "client_email": "firebase-adminsdk-k3faa@pockets-b5ac9.iam.gserviceaccount.com",
   "client_id": "114714803873853409176",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -29,6 +44,7 @@ const accDetails = {
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-k3faa%40pockets-b5ac9.iam.gserviceaccount.com",
   "universe_domain": "googleapis.com"
 }
+
 
 firebase.initializeApp({
   credential: firebase.credential.cert(accDetails)
@@ -80,10 +96,10 @@ exports.register = async (req, res) => {
 
 
       const { id: userId } = insert_mst__ngos_one;
-      if (req.body.email === "admin@pockets.com") {
+      if (req.body.email === "admin@pockets.com" || req.body.email === "admin@pocketgiving.co.uk") {
         console.log(req.body.email)
         console.log("im coming")
-        res.send({
+        res.send({ 
           token: generateJWT({
             defaultRole: "admin",
             allowedRoles: ["admin"],
@@ -194,7 +210,7 @@ exports.login = async (req, res) => {
 
   // Check if password matches the hashed version
   const passwordMatch = await bcrypt.compare(password, mst__ngos.password);
-  if (req.body.email === "admin@pockets.com") {
+  if (req.body.email === "admin@pockets.com" || req.body.email === "admin@pocketgiving.co.uk") {
     console.log("welcome to login")
     if (passwordMatch) {
       res.send({
@@ -214,7 +230,7 @@ exports.login = async (req, res) => {
       })
     }
   }
-  else if (req.body.email != "admin@pockets.com") {
+  else if (req.body.email != "admin@pockets.com" || req.body.email != "admin@pocketgiving.co.uk") {
     console.log("not welcome to login")
     if (passwordMatch) {
       console.log("vanakam", passwordMatch)
@@ -1842,3 +1858,48 @@ async function sendNotificationEvenetCreation(devicetoken, noftication) {
       console.error('Error sending notification:', error);
     });
 }
+
+// const fcm = firebase.messaging();
+// async function sendNotificationEvenetCreation(deviceToken, noftication) {
+//   const message = {
+//     token: deviceToken,
+//     notification: {
+//       title: 'Pocket',
+//       body: noftication,
+//     },
+//   };
+
+//   try {
+//     const response = await fcm.send(message);
+//     console.log('Successfully sent with response:', response);
+//   } catch (error) {
+//     console.error('Something has gone wrong!', error);
+//   }
+// }
+
+// async function sendNotificationEvenetCreation(devicetoken, noftication) {
+//   console.log("wer");
+
+//   const payload = {
+//     notification: {
+//       title: "Pocket",
+//       body: noftication,
+//       click_action: 'FULTER_NOTIFICATION_CLICK'
+//     },
+//     data: {
+//       data1: 'data1 value',
+//       data2: 'data2 value'
+//     },
+
+//   }
+//   const Options = { priority: 'high', timeToLive: 60 * 60 * 24, };
+//   await firebase.messaging().sendToDevice(devicetoken, payload, Options)
+
+//     .then((response) => {
+//       console.log('Notification sent successfully:', response);
+//     })
+//     .catch((error) => {
+//       console.error('Error sending notification:', error);
+    
+//     });
+// }

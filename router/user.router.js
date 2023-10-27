@@ -16,4 +16,5 @@ router.post('/paymentrefundamount', userController.paymentRefundEmailTrigger)
 router.post('/reportemail',userController.reportEmailTrigger)
 router.post('/quick-sms', userController.quickDonateSms)
 router.post('/project-announcement', userController.announcement)
+router.post('/userdeactivated',userController.userDeactivatedStatus)
 module.exports = router
